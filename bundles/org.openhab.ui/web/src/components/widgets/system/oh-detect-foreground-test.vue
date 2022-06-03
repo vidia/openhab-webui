@@ -55,8 +55,8 @@ export default {
   mounted () {
     // determine the current page - support: https://caniuse.com/?search=closest
     this.pageEl = this.$el.closest('.page')
-    // start the foreground activity immediately if the the page
-    // is in the foreground when the widget is mounted
+    // start the foreground activity immediately if the page
+    // is already in the foreground when the widget is mounted
     if (this.pageEl.classList.contains('page-current')) {
       this.startForegroundActivity()
     }
