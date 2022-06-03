@@ -21,3 +21,5 @@ export { default as OhWebframe } from './oh-webframe.vue'
 export { default as OhRepeater } from './oh-repeater.vue'
 export { default as OhChart } from './oh-chart.vue'
 export { default as OhClock } from './oh-clock.vue'
+
+export { default as OhDetectForegroundTest } from './oh-detect-foreground-test.vue'
