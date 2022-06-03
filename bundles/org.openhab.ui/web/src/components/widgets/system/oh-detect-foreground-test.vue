@@ -42,7 +42,6 @@ export default {
       }).open()
     },
     onPageAfterIn (page) {
-      debugger
       if (page.el === this.pageEl) {
         this.startForegroundActivity()
       }
