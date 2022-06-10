@@ -17,7 +17,8 @@ export default {
   data () {
     return {
       foreground: false,
-      pageEl: null
+      pageEl: null,
+      modalEl: null
     }
   },
   methods: {
@@ -26,7 +27,7 @@ export default {
       this.foreground = true
       this.$f7.toast.create({
         text: `${this.config.label || 'Widget'} transitioning to the foreground: start activity`,
-        closeTimeout: 2000,
+        closeTimeout: 500,
         position: 'center',
         destroyOnClose: true
       }).open()
@@ -36,7 +37,7 @@ export default {
       this.foreground = false
       this.$f7.toast.create({
         text: `${this.config.label || 'Widget'} transitioning to the background: stop activity`,
-        closeTimeout: 2000,
+        closeTimeout: 500,
         position: 'center',
         destroyOnClose: true
       }).open()
@@ -53,11 +54,14 @@ export default {
     }
   },
   mounted () {
-    // determine the current page - support: https://caniuse.com/?search=closest
+    const isInModal = this.$el.closest('.framework7-modals')
+    if (isInModal) {
+      this.startForegroundActivity()
+      return
+    }
+
     this.pageEl = this.$el.closest('.page')
-    // start the foreground activity immediately if the page
-    // is already in the foreground when the widget is mounted
-    if (this.pageEl.classList.contains('page-current')) {
+    if (this.pageEl && this.pageEl.classList.contains('page-current')) {
       this.startForegroundActivity()
     }
 
@@ -65,6 +69,7 @@ export default {
     this.$f7.on('pageBeforeOut', this.onPageBeforeOut)
   },
   beforeDestroy () {
+    this.stopForegroundActivity()
     this.$f7.off('pageAfterIn', this.onPageAfterIn)
     this.$f7.off('pageBeforeOut', this.onPageBeforeOut)
   }
